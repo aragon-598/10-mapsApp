@@ -1,8 +1,14 @@
 <div #map class="zoom-range-map"></div>
 
 <ul class="list-group">
-    <li class="list-group-item">
-        Marker1
+    <li 
+        *ngFor="let colorMarker of markers; let i = index" 
+        class="list-group-item"
+        [ngStyle]="{backgroundColor:colorMarker.color}"
+        (dblclick) = "deleteMarker(i)"
+        (click) = "flyTo(colorMarker.marker)"
+        >
+        Marker {{i + 1}}
     </li>
 </ul>
 
