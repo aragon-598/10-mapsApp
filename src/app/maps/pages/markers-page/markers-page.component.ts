@@ -55,7 +55,6 @@ export class MarkersPageComponent implements AfterViewInit {
     const color = '#xxxxxx'.replace(/x/g, y=>(Math.random()*16|0).toString(16));
     const lgnLat = this.map.getCenter();
     this.addMarker(lgnLat,color);
-    this.saveToLocalStorage();
   }
 
   addMarker(lngLat:LngLat, color:string):void{
@@ -69,6 +68,9 @@ export class MarkersPageComponent implements AfterViewInit {
       .addTo(this.map);
 
     this.markers.push({marker, color});
+    this.saveToLocalStorage();
+
+    marker.on('dragend',() => this.saveToLocalStorage());
   }
 
   deleteMarker(index:number):void{
@@ -90,7 +92,6 @@ export class MarkersPageComponent implements AfterViewInit {
         lngLat: marker.getLngLat().toArray(),
       }
     });
-    console.log(plainMarkers);
     
     localStorage.setItem('plainMarkers',JSON.stringify(plainMarkers));
     
